@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pantry_pro/providers/pantry_provider.dart';
 import 'package:pantry_pro/providers/recipe_provider.dart';
 import 'package:pantry_pro/widgets/recipe_card.dart';
@@ -11,7 +12,8 @@ class SuggestedRecipesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pantryProvider = Provider.of<PantryProvider>(context);
     final recipeProvider = Provider.of<RecipeProvider>(context);
-    final suggestedRecipes = recipeProvider.getSuggestedRecipes(pantryProvider.items);
+    final suggestedRecipes =
+        recipeProvider.getSuggestedRecipes(pantryProvider.items);
 
     return Scaffold(
       appBar: AppBar(
@@ -19,19 +21,17 @@ class SuggestedRecipesScreen extends StatelessWidget {
       ),
       body: suggestedRecipes.isEmpty
           ? const Center(
-              child: Text('No suggested recipes found. Add more items to your pantry!'),
+              child: Text('No suggested recipes based on your pantry.'),
             )
-          : GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16.0,
-                mainAxisSpacing: 16.0,
-                childAspectRatio: 0.75,
-              ),
+          : ListView.builder(
               itemCount: suggestedRecipes.length,
               itemBuilder: (context, index) {
-                return RecipeCard(recipe: suggestedRecipes[index]);
+                return RecipeCard(
+                  recipe: suggestedRecipes[index],
+                  onTap: () {
+                    context.go('/recipes/${suggestedRecipes[index].id}');
+                  },
+                );
               },
             ),
     );

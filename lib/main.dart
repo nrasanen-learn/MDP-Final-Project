@@ -1,53 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pantry_pro/providers/pantry_provider.dart';
 import 'package:pantry_pro/providers/recipe_provider.dart';
-import 'package:pantry_pro/screens/expiring_soon_screen.dart';
-import 'package:pantry_pro/screens/home_screen.dart';
-import 'package:pantry_pro/screens/main_screen.dart';
-import 'package:pantry_pro/screens/recipes_screen.dart';
-import 'package:pantry_pro/screens/settings_screen.dart';
-import 'package:pantry_pro/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:pantry_pro/providers/theme_provider.dart';
-
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
-
-final _router = GoRouter(
-  navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
-  routes: [
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) {
-        return MainScreen(child: child);
-      },
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeScreen(),
-        ),
-        GoRoute(
-          path: '/recipes',
-          builder: (context, state) => const RecipesScreen(),
-        ),
-        GoRoute(
-          path: '/expiring-soon',
-          builder: (context, state) => const ExpiringSoonScreen(),
-        ),
-      ],
-    ),
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => const SettingsScreen(),
-    ),
-    GoRoute(
-      path: '/splash',
-      builder: (context, state) => const SplashScreen(),
-    ),
-  ],
-);
+import 'package:pantry_pro/router.dart';
 
 void main() {
   runApp(
@@ -76,7 +32,7 @@ class PantryPro extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: themeProvider.themeMode,
-      routerConfig: _router,
+      routerConfig: router,
     );
   }
 }
