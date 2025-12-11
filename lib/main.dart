@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pantry_pro/providers/auth_provider.dart';
 import 'package:pantry_pro/providers/pantry_provider.dart';
 import 'package:pantry_pro/providers/recipe_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pantry_pro/providers/theme_provider.dart';
 import 'package:pantry_pro/router.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => PantryProvider()),
         ChangeNotifierProvider(create: (context) => RecipeProvider()),
       ],
@@ -32,7 +24,7 @@ class PantryPro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final router = createRouter(context);
+    final router = createRouter();
 
     return MaterialApp.router(
       title: 'Pantry Pro',

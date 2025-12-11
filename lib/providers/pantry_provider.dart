@@ -3,10 +3,10 @@ import 'package:pantry_pro/models/pantry_item.dart';
 
 class PantryProvider with ChangeNotifier {
   final List<PantryItem> _items = [
-    PantryItem(id: '1', name: 'Apples', quantity: 2, expirationDate: DateTime.now().add(const Duration(days: 7))),
-    PantryItem(id: '2', name: 'Bread', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 3))),
-    PantryItem(id: '3', name: 'Milk', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 5))),
-    PantryItem(id: '4', name: 'Chicken Breast', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 25))),
+    PantryItem(name: 'Apples', quantity: 2, expirationDate: DateTime.now().add(const Duration(days: 7))),
+    PantryItem(name: 'Bread', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 3))),
+    PantryItem(name: 'Milk', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 5))),
+    PantryItem(name: 'Chicken Breast', quantity: 1, expirationDate: DateTime.now().add(const Duration(days: 25))),
 
   ];
 
@@ -27,8 +27,8 @@ class PantryProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String id) {
-    _items.removeWhere((item) => item.id == id);
+  void removeItem(String name) {
+    _items.removeWhere((item) => item.name == name);
     notifyListeners();
   }
 

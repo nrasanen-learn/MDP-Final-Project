@@ -98,7 +98,6 @@ class _AddPantryItemDialogState extends State<AddPantryItemDialog> {
               final pantryProvider = Provider.of<PantryProvider>(context, listen: false);
               pantryProvider.addItem(
                 PantryItem(
-                  id: DateTime.now().toString(),
                   name: _name,
                   quantity: _quantity,
                   expirationDate: _selectedDate,

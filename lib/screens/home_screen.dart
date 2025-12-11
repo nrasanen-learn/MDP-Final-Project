@@ -24,9 +24,11 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = pantryProvider.items[index];
                 return PantryListItem(
-                  key: ValueKey(item.id),
+                  key: ValueKey(item.name),
                   item: item,
-                  onDelete: () => pantryProvider.removeItem(item.id),
+                  onDelete: () {
+                    pantryProvider.removeItem(item.name);
+                  },
                 );
               },
             ),
