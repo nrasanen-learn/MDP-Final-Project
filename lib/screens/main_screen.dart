@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pantry_pro/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
   final Widget child;
@@ -8,7 +10,18 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pantry Pro'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => authProvider.signOut(),
+          ),
+        ],
+      ),
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -32,10 +45,10 @@ class MainScreen extends StatelessWidget {
   }
 
   int _calculateSelectedIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).uri.toString();
+    final String location = GoRouterState.of(context).matchedLocation;
     if (location == '/') {
       return 0;
-    } else if (location == '/recipes') {
+    } else if (location.startsWith('/recipes')) {
       return 1;
     } else if (location == '/expiring-soon') {
       return 2;

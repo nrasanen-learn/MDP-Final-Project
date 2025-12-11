@@ -1,45 +1,42 @@
+
 # Pantry Pro Blueprint
 
 ## Overview
 
-Pantry Pro is a mobile application designed to help users manage their kitchen inventory, reduce food waste, and discover new recipes. The app allows users to track items in their pantry, monitor expiration dates, and get recipe suggestions based on the ingredients they have on hand.
+Pantry Pro is a Flutter application designed to help users manage their pantry inventory, track expiration dates, and generate recipes based on available ingredients.
 
-## Implemented Features
+## Style and Design
 
-### Core
+- **Theme:** The app will use a clean and modern design with a blue color scheme. It will support both light and dark modes.
+- **Typography:** We'll use the `google_fonts` package to implement custom fonts for a unique and readable text style.
+- **Layout:** The layout will be intuitive and user-friendly, with a focus on simplicity and ease of use.
 
-*   **Project Setup:** Standard Flutter project structure.
-*   **Splash Screen:** A simple and elegant splash screen that appears when the app is launched.
-*   **Routing:** A declarative routing solution using the `go_router` package for seamless navigation.
-*   **Theme:** A customizable theme with support for light, dark, and system modes, managed with the `provider` package.
-*   **Providers:** Centralized state management using `provider` for the theme, pantry, and recipes.
+## Features
 
-### Screens
+### Implemented
 
-*   **Main Screen:** A shell screen that hosts the bottom navigation bar for seamless navigation between the main sections of the app.
-*   **Pantry Screen:** The main screen of the app, which displays a list of all items in the user's pantry. It also includes a floating action button to add new items.
-*   **Recipes Screen:** A screen that displays a grid of available recipes using a `RecipeCard` widget.
-*   **Recipe Details Screen:** A screen that shows the details of a selected recipe, including an image, ingredients, and instructions.
-*   **Expiring Soon Screen:** A screen that lists all pantry items that are nearing their expiration date.
-*   **Settings Screen:** A screen that allows users to select their preferred theme (light, dark, or system) and view information about the app.
-*   **Suggested Recipes Screen:** A screen that displays recipes that can be made with the ingredients in the user's pantry.
+- **Firebase Integration:**
+  - Firebase Core for project connection.
+  - Cloud Firestore for database.
+  - Firebase Hosting for web deployment.
+- **Basic App Structure:**
+  - Provider for state management.
+  - A basic router for navigation.
+- **Authentication:**
+  - Login screen with email and password fields.
+  - Create account screen with email and password fields.
+  - Authentication service to handle user creation and login with Firebase Authentication.
+  - A redirect system that sends unauthenticated users to the login screen.
+  - A logout button on the main screen.
 
-### Widgets
+### Current Plan: Pantry Management
 
-*   **Add Pantry Item Dialog:** A user-friendly dialog with icons and a date picker for adding new items to the pantry.
-*   **RecipeCard:** A card widget that displays recipe information in an attractive and organized way.
-*   **PantryListItem:** A custom list item widget for the pantry screen with a modern design and a delete button.
-
-## Current Plan
-
-### Next Steps
-
-1.  **Bug Fixes:** Resolved several bugs related to missing `id` and `imageUrl` fields in models, incorrect use of the `intl` package, and incorrect provider access.
-2.  **Search Functionality:** Add a search bar to the `RecipesScreen` to allow users to search for specific recipes.
-3.  **UI/UX Enhancements:**
-    *   Add animations to enhance the user experience.
-    *   Add placeholder images for recipes that don't have one.
-4.  **Testing:** Write unit and widget tests to ensure the app is working correctly.
-5.  **Firebase Integration:**
-    *   Use Firebase to store pantry items and recipes.
-    *   Implement user authentication.
+- **Create Pantry Screen:**
+  - A new screen that displays a list of pantry items.
+  - A button to add a new item to the pantry.
+- **Create Add Item Screen:**
+  - A form to add a new item, including name, quantity, and expiration date.
+- **Create Pantry Service:**
+  - A service to handle adding, updating, and deleting pantry items in Firestore.
+- **Update Navigation:**
+  - The pantry screen will be the default screen after login.
