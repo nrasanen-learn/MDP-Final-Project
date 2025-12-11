@@ -20,10 +20,34 @@ class DefaultFirebaseOptions {
     if (kIsWeb) {
       return web;
     }
-    // As we are only targeting web for now, we can throw an error for other platforms.
-    throw UnsupportedError(
-      'DefaultFirebaseOptions are not supported for this platform.',
-    );
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for iOS - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.macOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macOS - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for Windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for Linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
   }
 
   static const FirebaseOptions web = FirebaseOptions(
@@ -32,6 +56,14 @@ class DefaultFirebaseOptions {
     messagingSenderId: '178879481903',
     projectId: 'firebasetestcreate',
     authDomain: 'fir-testcreate-f07ea.firebaseapp.com',
+    storageBucket: 'firebasetestcreate.firebasestorage.app',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyCu6D2tzxNnJv-Yu_jxBrr64MTu12_qOEc',
+    appId: '1:178879481903:android:a3a176ac2a7fd83be99eda',
+    messagingSenderId: '178879481903',
+    projectId: 'firebasetestcreate',
     storageBucket: 'firebasetestcreate.firebasestorage.app',
   );
 }

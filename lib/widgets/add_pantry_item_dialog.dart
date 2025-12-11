@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pantry_pro/models/pantry_item.dart';
 import 'package:pantry_pro/providers/pantry_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -97,11 +96,9 @@ class _AddPantryItemDialogState extends State<AddPantryItemDialog> {
               _formKey.currentState!.save();
               final pantryProvider = Provider.of<PantryProvider>(context, listen: false);
               pantryProvider.addItem(
-                PantryItem(
-                  name: _name,
-                  quantity: _quantity,
-                  expirationDate: _selectedDate,
-                ),
+                name: _name,
+                quantity: _quantity,
+                expirationDate: _selectedDate,
               );
               Navigator.of(context).pop();
             }

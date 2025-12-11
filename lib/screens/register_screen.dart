@@ -7,7 +7,7 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -23,6 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+        if (!mounted) return;
         context.go('/');
       } on FirebaseAuthException catch (e) {
         setState(() {

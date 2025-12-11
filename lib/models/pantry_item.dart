@@ -1,28 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class PantryItem {
+  final String id;
   final String name;
   int quantity;
   final DateTime? expirationDate;
 
   PantryItem({
+    required this.id,
     required this.name,
     required this.quantity,
     this.expirationDate,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toFirestore() {
     return {
       'name': name,
       'quantity': quantity,
-      'expirationDate': expirationDate?.toIso8601String(),
+      'expirationDate': expirationDate != null ? Timestamp.fromDate(expirationDate!) : null,
     };
   }
 
-  factory PantryItem.fromMap(Map<String, dynamic> map) {
+  factory PantryItem.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
     return PantryItem(
-      name: map['name'] ?? '',
-      quantity: map['quantity'] ?? 0,
-      expirationDate: map['expirationDate'] != null
-          ? DateTime.parse(map['expirationDate'])
+      id: doc.id,
+      name: data['name'] ?? '',
+      quantity: data['quantity'] ?? 0,
+      expirationDate: data['expirationDate'] != null
+          ? (data['expirationDate'] as Timestamp).toDate()
           : null,
     );
   }
