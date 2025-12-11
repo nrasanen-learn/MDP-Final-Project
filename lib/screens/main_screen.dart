@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pantry_pro/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
   final Widget child;
@@ -8,9 +11,19 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pantry Pro'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await authService.signOut();
+              // GoRouter's redirect will handle navigation
+            },
+          ),
+        ],
       ),
       body: child,
       bottomNavigationBar: BottomNavigationBar(

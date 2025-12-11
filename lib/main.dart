@@ -1,14 +1,30 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pantry_pro/providers/pantry_provider.dart';
 import 'package:pantry_pro/providers/recipe_provider.dart';
+import 'package:pantry_pro/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:pantry_pro/providers/theme_provider.dart';
 import 'package:pantry_pro/router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+        StreamProvider<User?>(
+          create: (context) => context.read<AuthService>().authStateChanges,
+          initialData: null,
+        ),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => PantryProvider()),
         ChangeNotifierProvider(create: (context) => RecipeProvider()),
