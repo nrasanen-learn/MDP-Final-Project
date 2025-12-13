@@ -22,67 +22,76 @@ class _AddPantryItemDialogState extends State<AddPantryItemDialog> {
       title: const Text('Add Pantry Item'),
       content: Form(
         key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Item Name',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a name';
-                }
-                return null;
-              },
-              onSaved: (value) => _name = value!,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Quantity',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              initialValue: '1',
-              validator: (value) {
-                if (value == null || int.tryParse(value) == null || int.parse(value) <= 0) {
-                  return 'Please enter a valid quantity';
-                }
-                return null;
-              },
-              onSaved: (value) => _quantity = int.parse(value!),
-            ),
-            const SizedBox(height: 16),
-            Row(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: Text(
-                    _selectedDate == null
-                        ? 'No expiration date selected'
-                        : 'Expires on: ${DateFormat.yMd().format(_selectedDate!)}',
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Item Name',
+                    border: OutlineInputBorder(),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: () async {
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
-                    );
-                    if (pickedDate != null) {
-                      setState(() {
-                        _selectedDate = pickedDate;
-                      });
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a name';
                     }
+                    return null;
                   },
+                  onSaved: (value) => _name = value!,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Quantity',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  initialValue: '1',
+                  validator: (value) {
+                    if (value == null ||
+                        int.tryParse(value) == null ||
+                        int.parse(value) <= 0) {
+                      return 'Please enter a valid quantity';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => _quantity = int.parse(value!),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _selectedDate == null
+                            ? 'No expiration date selected'
+                            : 'Expires on: ${DateFormat.yMd().format(_selectedDate!)}',
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: () async {
+                        final pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365 * 5),
+                          ),
+                        );
+                        if (pickedDate != null) {
+                          setState(() {
+                            _selectedDate = pickedDate;
+                          });
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
       actions: [
@@ -94,7 +103,10 @@ class _AddPantryItemDialogState extends State<AddPantryItemDialog> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              final pantryProvider = Provider.of<PantryProvider>(context, listen: false);
+              final pantryProvider = Provider.of<PantryProvider>(
+                context,
+                listen: false,
+              );
               pantryProvider.addItem(
                 name: _name,
                 quantity: _quantity,

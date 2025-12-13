@@ -1,16 +1,16 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pantry_pro/providers/recipe_provider.dart';
 import 'package:pantry_pro/screens/expiring_soon_screen.dart';
 import 'package:pantry_pro/screens/home_screen.dart';
 import 'package:pantry_pro/screens/login_screen.dart';
 import 'package:pantry_pro/screens/main_screen.dart';
 import 'package:pantry_pro/screens/recipe_details_screen.dart';
-import 'package:pantry_pro/screens/recipes_screen.dart';
 import 'package:pantry_pro/screens/register_screen.dart';
 import 'package:pantry_pro/screens/settings_screen.dart';
-import 'package:pantry_pro/screens/suggested_recipes_screen.dart';
+import 'package:pantry_pro/widgets/recipe_list.dart';
+import 'package:provider/provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -21,7 +21,9 @@ GoRouter createRouter() {
     initialLocation: '/',
     redirect: (context, state) {
       final isAuthenticated = FirebaseAuth.instance.currentUser != null;
-      final isLoggingIn = state.matchedLocation == '/login' || state.matchedLocation == '/register';
+      final isLoggingIn =
+          state.matchedLocation == '/login' ||
+          state.matchedLocation == '/register';
 
       if (!isAuthenticated && !isLoggingIn) {
         return '/login';
@@ -40,23 +42,18 @@ GoRouter createRouter() {
           return MainScreen(child: child);
         },
         routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => const HomeScreen(),
-          ),
+          GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
           GoRoute(
             path: '/recipes',
-            builder: (context, state) => const RecipesScreen(),
+            builder: (context, state) => const RecipeList(),
             routes: [
-              GoRoute(
-                path: 'suggested',
-                builder: (context, state) => const SuggestedRecipesScreen(),
-              ),
               GoRoute(
                 path: ':id',
                 builder: (context, state) {
                   final id = state.pathParameters['id']!;
-                  return RecipeDetailsScreen(recipeId: id);
+                  final recipeProvider = Provider.of<RecipeProvider>(context, listen: false);
+                  final recipe = recipeProvider.getRecipeById(id);
+                  return RecipeDetailsScreen(recipe: recipe!);
                 },
               ),
             ],
@@ -71,10 +68,7 @@ GoRouter createRouter() {
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
       ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/register',
         builder: (context, state) => const RegisterScreen(),

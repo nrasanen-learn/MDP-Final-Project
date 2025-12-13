@@ -1,57 +1,49 @@
-
-# Pantry Pro - Application Blueprint
+# Pantry Pro Blueprint
 
 ## Overview
 
-Pantry Pro is a smart pantry management application designed to help users keep track of their food inventory, reduce food waste, and streamline their grocery shopping. By leveraging Firebase for backend services, the app provides a real-time, multi-device experience.
+Pantry Pro is a Flutter application designed to help users manage their pantry items and discover new recipes. It allows users to add, view, and delete pantry items, and it uses Firebase Firestore to store the data. The app now integrates with Google's Gemini AI to provide recipe suggestions based on the user's available ingredients, helping to reduce food waste.
 
-## Style and Design
+## Features
 
-*   **Theme:** Modern, clean, and intuitive, utilizing Material 3 design principles.
-*   **Color Palette:** A vibrant and energetic look and feel, with a primary color of deep purple. A noise texture will be applied to the main background for a premium, tactile feel.
-*   **Typography:** Expressive and clear typography using Google Fonts. `Oswald` for headings and `Roboto` for body text.
-*   **Iconography:** Material Design icons to enhance clarity and navigation.
-*   **Interactivity:** Modern, interactive components with subtle animations and "glow" effects for a polished user experience.
+### Implemented
 
-## Implemented Features
+*   **Pantry Item Management:** Users can add new items to their pantry, including the item's name, quantity, and expiration date.
+*   **Firestore Integration:** The app is connected to a Firebase Firestore database to persist pantry items. All changes made in the app are automatically synced with the database.
+*   **Real-time Updates:** The app uses a real-time stream of data from Firestore, so any changes made to the pantry are instantly reflected in the UI.
+*   **AI-Powered Recipe Generation:** The app uses the Gemini AI model via the `firebase_ai` SDK to dynamically generate recipes.
+*   **Expiration-Aware Suggestions:** The recipe generation prioritizes ingredients that are closest to their expiration date to help users reduce food waste.
+*   **Recipe Viewing:** Users can view a list of suggested recipes and tap on any recipe to see its details, including ingredients and instructions.
+*   **Dynamic UI:** The app's UI is built with Flutter and the Provider package, which allows for a dynamic and responsive user experience with a tab-based navigation for pantry and recipes.
 
-*   **Firebase Integration:** Core Firebase services (`firebase_core`, `firebase_auth`, `cloud_firestore`) are integrated.
-*   **Basic Theming:** A `ThemeProvider` is set up to manage light and dark modes.
-*   **Navigation:** `go_router` is configured for basic routing.
+### Future
 
-## Development Plan: Authentication
+*   **Search and Filter:** Implement a search bar for both pantry items and recipes.
+*   **Favorite Recipes:** Allow users to save their favorite recipes for easy access later.
+*   **Meal Planning:** Add a feature to create a weekly meal plan based on generated recipes.
+*   **Improved UI/UX:** Enhance the app's design with a more modern and intuitive user interface, including animations and custom themes.
+*   **Settings Screen:** Create a settings screen where users can customize the app's behavior, such as setting notification preferences or changing the theme.
 
-Our first major goal is to implement a complete authentication system.
+## Design
 
-### 1. Create Authentication Service
+### Architecture
 
-*   Create a file at `lib/services/firebase_auth_service.dart`.
-*   This service will encapsulate all Firebase Auth logic:
-    *   `signInWithEmailAndPassword`
-    *   `createUserWithEmailAndPassword`
-    *   `signOut`
-    *   A stream to listen to `authStateChanges`.
+The app follows a clean architecture pattern, with a clear separation of concerns between the UI, business logic, and data layers.
 
-### 2. Build UI Screens
+*   **Provider Package:** Used for state management (`PantryProvider`, `RecipeProvider`, `ThemeProvider`).
+*   **Models:** `PantryItem` and `Recipe` models define the core data structures.
+*   **Services:**
+    *   `PantryProvider` encapsulates the business logic for pantry management.
+    *   `RecipeProvider` handles the logic for generating recipes using the Gemini AI. It sorts ingredients by expiration date and constructs the prompt for the AI.
+*   **UI:**
+    *   The UI is composed of Flutter widgets, separated from the business logic.
+    *   **`HomeScreen`:** Now features a `TabBar` to switch between the pantry list and recipe suggestions.
+    *   **`RecipeList` & `RecipeListItem`:** Widgets for displaying the list of generated recipes.
+    *   **`RecipeDetailsScreen`:** A dedicated screen to show the full details of a selected recipe.
+*   **AI Integration:**
+    *   The `firebase_ai` package is used to interact with the Firebase AI backend.
+    *   The `gemini-pro` model is leveraged for its powerful text and instruction-following capabilities.
 
-*   **Login Screen (`lib/screens/login_screen.dart`):**
-    *   Email and password input fields.
-    *   "Login" and "Sign Up" buttons.
-    *   A toggle to switch between login and registration forms.
-*   **Authentication Wrapper (`lib/widgets/auth_wrapper.dart`):**
-    *   This widget will listen to the authentication state stream from `FirebaseAuthService`.
-    *   If the user is logged in, it will show the `HomeScreen`.
-    *   If the user is logged out, it will show the `LoginScreen`.
+### Theming
 
-### 3. Update `main.dart` and Router
-
-*   Modify the `main` function to use a `StreamProvider` for the authentication state.
-*   Update the `go_router` configuration to use the `AuthWrapper` as the initial route.
-*   Define routes for `/login` and `/`.
-
-### 4. Create Placeholder Screens
-
-*   Create basic, stateless placeholder widgets for the main application screens to facilitate navigation setup:
-    *   `lib/screens/home_screen.dart`
-    *   `lib/screens/add_pantry_item_screen.dart`
-    *   `lib/screens/settings_screen.dart`
+The app uses a basic Material Design theme. The `primarySeedColor` is set to `Colors.deepPurple`, which gives the app a modern and stylish look. Further customization is planned for a future release.

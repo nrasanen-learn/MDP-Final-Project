@@ -20,19 +20,19 @@
   <link rel="manifest" href="manifest.json">
 
   <script>
-    var serviceWorkerVersion = null;
+    var serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
-  <script src="flutter.js" defer></script>
 </head>
 <body>
-  <!-- Firebase SDKs - using compat versions for Flutter Web -->
+  <!-- Firebase SDKs - Must load BEFORE flutter.js -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
+  <!-- Load flutter.js WITHOUT defer -->
+  <script src="flutter.js"></script>
   <script>
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,

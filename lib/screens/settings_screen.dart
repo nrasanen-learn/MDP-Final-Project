@@ -10,9 +10,7 @@ class SettingsScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
@@ -30,14 +28,8 @@ class SettingsScreen extends StatelessWidget {
                   value: ThemeMode.system,
                   child: Text('System'),
                 ),
-                DropdownMenuItem(
-                  value: ThemeMode.light,
-                  child: Text('Light'),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text('Dark'),
-                ),
+                DropdownMenuItem(value: ThemeMode.light, child: Text('Light')),
+                DropdownMenuItem(value: ThemeMode.dark, child: Text('Dark')),
               ],
             ),
           ),
@@ -51,7 +43,9 @@ class SettingsScreen extends StatelessWidget {
                 applicationVersion: '1.0.0',
                 applicationIcon: const Icon(Icons.food_bank),
                 children: [
-                  const Text('Pantry Pro helps you manage your pantry items and discover new recipes.'),
+                  const Text(
+                    'Pantry Pro helps you manage your pantry items and discover new recipes.',
+                  ),
                 ],
               );
             },

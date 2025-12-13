@@ -17,7 +17,9 @@ class RecipeCard extends StatelessWidget {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(4),
+                ),
                 child: Image.network(
                   recipe.imageUrl,
                   fit: BoxFit.cover,

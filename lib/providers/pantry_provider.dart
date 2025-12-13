@@ -37,7 +37,9 @@ class PantryProvider with ChangeNotifier {
     await _firestore.collection(_collectionPath).add({
       'name': name,
       'quantity': quantity,
-      'expirationDate': expirationDate != null ? Timestamp.fromDate(expirationDate) : null,
+      'expirationDate': expirationDate != null
+          ? Timestamp.fromDate(expirationDate)
+          : null,
     });
     _loadItems();
   }
@@ -48,10 +50,9 @@ class PantryProvider with ChangeNotifier {
   }
 
   Future<void> updateItemQuantity(PantryItem item, int quantity) async {
-    await _firestore
-        .collection(_collectionPath)
-        .doc(item.id)
-        .update({'quantity': quantity});
+    await _firestore.collection(_collectionPath).doc(item.id).update({
+      'quantity': quantity,
+    });
     _loadItems();
   }
 }

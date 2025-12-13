@@ -11,13 +11,9 @@ class ExpiringSoonScreen extends StatelessWidget {
     final expiringItems = pantryProvider.expiringSoonItems;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Expiring Soon'),
-      ),
+      appBar: AppBar(title: const Text('Expiring Soon')),
       body: expiringItems.isEmpty
-          ? const Center(
-              child: Text('No items expiring soon.'),
-            )
+          ? const Center(child: Text('No items expiring soon.'))
           : ListView.builder(
               itemCount: expiringItems.length,
               itemBuilder: (context, index) {

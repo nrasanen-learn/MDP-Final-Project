@@ -19,10 +19,7 @@ class AppTheme {
         ),
       ),
       textTheme: TextTheme(
-        bodyLarge: GoogleFonts.roboto(
-          color: Colors.black,
-          fontSize: 16,
-        ),
+        bodyLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 16),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: primaryColor,
@@ -51,10 +48,7 @@ class AppTheme {
         ),
       ),
       textTheme: TextTheme(
-        bodyLarge: GoogleFonts.roboto(
-          color: secondaryColor,
-          fontSize: 16,
-        ),
+        bodyLarge: GoogleFonts.roboto(color: secondaryColor, fontSize: 16),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: primaryColor,

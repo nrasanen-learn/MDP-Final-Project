@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pantry_pro/services/auth_service.dart';
@@ -28,10 +27,7 @@ class MainScreen extends StatelessWidget {
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Pantry',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Pantry'),
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),
             label: 'Recipes',
