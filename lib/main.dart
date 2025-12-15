@@ -9,6 +9,8 @@ import 'package:pantry_pro/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+/* notes: this ai was good initially but slowing got itself stuck in loops and became 
+/more of a problem to manage then a useful tool */
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
